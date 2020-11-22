@@ -1,13 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import Cards from './dbCards.js';
-import Cors from 'cors';
+import express from "express";
+import mongoose from "mongoose";
+import Cards from "./dbCards.js";
+import Cors from "cors";
 
 // App Config
 const app = express();
 const port = process.env.PORT || 8001;
+
 const connection_url =
-  'mongodb+srv://admin:mjuMDI9vtXi490SP@cluster0.m1nru.mongodb.net/tinderdb?retryWrites=true&w=majority';
+  "mongodb+srv://user:pass@tinder-cluster.sxihs.mongodb.net/tinderdb?retryWrites=true&w=majority";
 
 // Middlewares
 app.use(express.json());
@@ -17,13 +18,13 @@ app.use(Cors());
 mongoose.connect(connection_url, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 // API Endpoints
-app.get('/', (req, res) => res.status(200).send('HELLO CLEVER PROGRAMMERS!!!'));
+app.get("/", (req, res) => res.status(200).send("Main"));
 
-app.post('/tinder/cards', (req, res) => {
+app.post("/tinder/cards", (req, res) => {
   const dbCard = req.body;
   Cards.create(dbCard, (err, data) => {
     if (err) {
@@ -34,7 +35,7 @@ app.post('/tinder/cards', (req, res) => {
   });
 });
 
-app.get('/tinder/cards', (req, res) => {
+app.get("/tinder/cards", (req, res) => {
   Cards.find((err, data) => {
     if (err) {
       res.status(500).send(err);
